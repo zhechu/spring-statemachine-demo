@@ -24,7 +24,7 @@
 6. http://localhost:9991/statemachine/testRedisPersister 使用redis作为状态机持久化的演示
 7. http://localhost:9991/statemachine/testRedisPersisterRestore 从redis取出状态机的演示，显然和上面是一对
 
-教程看我的博客
-https://my.oschina.net/u/173343/blog/3043965 废话篇
-https://my.oschina.net/u/173343/blog/3043967 跑起来篇
+#### 教程看我的博客
+https://my.oschina.net/u/173343/blog/3043965 废话篇 <br/>
+https://my.oschina.net/u/173343/blog/3043967 跑起来篇 <br/>
 后面还在写
