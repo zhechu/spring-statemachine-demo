@@ -27,6 +27,7 @@ public class StateMachineController {
 	
 	@Autowired
 	private StateMachine orderSingleMachine;
+
 	
 	@Autowired
 	private OrderStateMachineBuilder orderStateMachineBuilder;
@@ -65,7 +66,8 @@ public class StateMachineController {
 		// 获取最终状态
 		System.out.println("最终状态：" + orderSingleMachine.getState().getId());
 	}
-
+	
+	
 	@RequestMapping("/testOrderState")
 	public void testOrderState(String orderId) throws Exception {
 
