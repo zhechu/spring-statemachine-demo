@@ -27,4 +27,5 @@
 #### 教程看我的博客
 https://my.oschina.net/u/173343/blog/3043965 废话篇 <br/>
 https://my.oschina.net/u/173343/blog/3043967 跑起来篇 <br/>
+https://my.oschina.net/u/173343/blog/3045007 多个状态机共存 <br/>
 后面还在写
