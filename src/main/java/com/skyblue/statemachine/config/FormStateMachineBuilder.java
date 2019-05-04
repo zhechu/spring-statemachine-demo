@@ -8,10 +8,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * 订单状态机构建器
- *
- * @author kutome
- * @date 2018年10月12日
- * @version V1.0
  */
 @Component
 public class FormStateMachineBuilder {
