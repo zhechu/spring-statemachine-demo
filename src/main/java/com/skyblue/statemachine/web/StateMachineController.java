@@ -81,11 +81,11 @@ public class StateMachineController {
 		stateMachine.sendEvent(OrderEvents.PAY);
 
 		// 触发RECEIVE事件
-		// stateMachine.sendEvent(Events.RECEIVE);
+		stateMachine.sendEvent(OrderEvents.RECEIVE);
 
-		Order order = new Order(orderId, "547568678", "广东省深圳市", "13435465465", "RECEIVE");
-		Message<OrderEvents> message = MessageBuilder.withPayload(OrderEvents.RECEIVE).setHeader("order", order).build();
-		stateMachine.sendEvent(message);
+//		Order order = new Order(orderId, "547568678", "广东省深圳市", "13435465465", "RECEIVE");
+//		Message<OrderEvents> message = MessageBuilder.withPayload(OrderEvents.RECEIVE).setHeader("order", order).build();
+//		stateMachine.sendEvent(message);
 
 		// 获取最终状态
 		System.out.println("最终状态：" + stateMachine.getState().getId());
