@@ -82,7 +82,8 @@ public class StateMachineController {
 
 		// 触发RECEIVE事件
 		//stateMachine.sendEvent(OrderEvents.RECEIVE);
-
+		
+		//用message传递数据
 		Order order = new Order(orderId, "547568678", "广东省深圳市", "13435465465", "RECEIVE");
 		Message<OrderEvents> message = MessageBuilder.withPayload(OrderEvents.RECEIVE).setHeader("order", order).build();
 		stateMachine.sendEvent(message);
