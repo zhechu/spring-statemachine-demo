@@ -33,7 +33,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
     @OnTransition(source = "WAITING_FOR_RECEIVE", target = "DONE")
     public void receive(Message<OrderEvents> message) {
     	System.out.println("传递的参数：" + message.getHeaders().get("order"));
-    	System.out.println("传递的参数：" + message.getHeaders().get("test"));
+    	System.out.println("传递的参数：" + message.getHeaders().get("otherObj"));
         logger.info("---用户已收货，订单完成---");
     }
 
