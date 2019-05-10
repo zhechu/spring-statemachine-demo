@@ -18,5 +18,4 @@ public class OrderStateMachinePersist implements StateMachinePersist<OrderStates
 				null, null, null, null, "orderMachine");
 		return result;
 	}
-
 }
