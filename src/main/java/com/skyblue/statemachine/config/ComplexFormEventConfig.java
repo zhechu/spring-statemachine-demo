@@ -30,12 +30,14 @@ private Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("---校验复杂表单---");
     }
     
+  //不会执行
     @OnTransition(source = "CHECK_CHOICE", target = "CONFIRM_FORM")
     public void check2confirm(Message<ComplexFormEvents> message) {
     	System.out.println("传递的参数：" + message.getHeaders().get("form").toString());
         logger.info("---校验表单到待提交表单(choice true)---");
     }
     
+  //不会执行
     @OnTransition(source = "CHECK_CHOICE", target = "DEAL_FORM")
     public void check2deal(Message<ComplexFormEvents> message) {
     	System.out.println("传递的参数：" + message.getHeaders().get("form").toString());
@@ -48,12 +50,14 @@ private Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("---处理复杂表单---");
     }
     
+    //不会执行
     @OnTransition(source = "DEAL_CHOICE", target = "FAILED_FORM")
     public void deal2fail(Message<ComplexFormEvents> message) {
     	System.out.println("传递的参数：" + message.getHeaders().get("form").toString());
         logger.info("---处理复杂表单失败(choice false)---");
     }
     
+    //不会执行
     @OnTransition(source = "DEAL_CHOICE", target = "FULL_FORM")
     public void deal2full(Message<ComplexFormEvents> message) {
     	System.out.println("传递的参数：" + message.getHeaders().get("form").toString());
