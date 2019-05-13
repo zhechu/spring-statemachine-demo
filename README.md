@@ -23,6 +23,7 @@
 5. http://localhost:9991/statemachine/testMemoryPersisterRestore 从内存中取出状态机的演示，和上面是一对
 6. http://localhost:9991/statemachine/testRedisPersister 使用redis作为状态机持久化的演示
 7. http://localhost:9991/statemachine/testRedisPersisterRestore 从redis取出状态机的演示，显然和上面是一对
+8. http://localhost:9991/statemachine/testOrderRestore 伪持久化和中间段状态机例子
 
 #### 教程看我的博客
 https://my.oschina.net/u/173343/blog/3043965 废话篇 <br/>
@@ -30,5 +31,7 @@ https://my.oschina.net/u/173343/blog/3043967 跑起来篇 <br/>
 https://my.oschina.net/u/173343/blog/3045007 多个状态机共存 <br/>
 https://my.oschina.net/u/173343/blog/3045217 多种状态机共存<br/>
 https://my.oschina.net/u/173343/blog/3045884 传递参数的message<br/>
-
+https://my.oschina.net/u/173343/blog/3045884 传递参数的message<br/>
+https://my.oschina.net/u/173343/blog/3047160 持久化<br/>
+https://my.oschina.net/u/173343/blog/3047916 伪持久化和中间段状态机<br/>
 后面还在写
