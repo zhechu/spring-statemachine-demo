@@ -11,10 +11,14 @@ import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skyblue.statemachine.config.ComplexFormEvents;
+import com.skyblue.statemachine.config.ComplexFormStateMachineBuilder;
+import com.skyblue.statemachine.config.ComplexFormStates;
 import com.skyblue.statemachine.config.Form;
 import com.skyblue.statemachine.config.FormEvents;
 import com.skyblue.statemachine.config.FormStateMachineBuilder;
 import com.skyblue.statemachine.config.FormStates;
+import com.skyblue.statemachine.config.InMemoryStateMachinePersist;
 import com.skyblue.statemachine.config.MachineMap;
 import com.skyblue.statemachine.config.Order;
 import com.skyblue.statemachine.config.OrderEvents;
@@ -34,6 +38,12 @@ public class StateMachineController {
 	
 	@Autowired
 	private FormStateMachineBuilder formStateMachineBuilder;
+	
+	@Autowired
+	private ComplexFormStateMachineBuilder complexFormStateMachineBuilder;
+	
+	@Autowired
+	private InMemoryStateMachinePersist inMemoryStateMachinePersist;
 	
 	@Resource(name="orderMemoryPersister")
 	private StateMachinePersister<OrderStates, OrderEvents, String> orderMemorypersister;
@@ -111,6 +121,80 @@ public class StateMachineController {
 		System.out.println("最终状态：" + stateMachine.getState().getId());
 	}
 	
+	@RequestMapping("/testComplexFormState")
+	public void testComplexFormState() throws Exception {
+
+		StateMachine<ComplexFormStates, ComplexFormEvents> stateMachine = complexFormStateMachineBuilder.build(beanFactory);
+		System.out.println(stateMachine.getId());
+		
+		Form form1 = new Form();
+		form1.setId("111");
+		form1.setFormName(null);
+		
+		Form form2 = new Form();
+		form2.setId("222");
+		form2.setFormName("好的表单");
+		
+		Form form3 = new Form();
+		form3.setId("333");
+		form3.setFormName(null);
+
+		// 创建流程
+		System.out.println("-------------------form1------------------");
+		
+		stateMachine.start();
+		Message message = MessageBuilder.withPayload(ComplexFormEvents.WRITE).setHeader("form", form1).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.CHECK).setHeader("form", form1).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.DEAL).setHeader("form", form1).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.SUBMIT).setHeader("form", form1).build();
+		stateMachine.sendEvent(message);
+		System.out.println("最终状态：" + stateMachine.getState().getId());
+		
+		System.out.println("-------------------form2------------------");
+		stateMachine = complexFormStateMachineBuilder.build(beanFactory);
+		stateMachine.start();
+		message = MessageBuilder.withPayload(ComplexFormEvents.WRITE).setHeader("form", form2).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.CHECK).setHeader("form", form2).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.DEAL).setHeader("form", form2).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.SUBMIT).setHeader("form", form2).build();
+		stateMachine.sendEvent(message);
+		System.out.println("最终状态：" + stateMachine.getState().getId());
+		
+		System.out.println("-------------------form3------------------");
+		stateMachine = complexFormStateMachineBuilder.build(beanFactory);
+		stateMachine.start();
+		message = MessageBuilder.withPayload(ComplexFormEvents.WRITE).setHeader("form", form3).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.CHECK).setHeader("form", form3).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		form3.setFormName("好的表单");
+		message = MessageBuilder.withPayload(ComplexFormEvents.DEAL).setHeader("form", form3).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.SUBMIT).setHeader("form", form3).build();
+		stateMachine.sendEvent(message);
+		message = MessageBuilder.withPayload(ComplexFormEvents.CHECK).setHeader("form", form3).build();
+		stateMachine.sendEvent(message);
+		System.out.println("当前状态：" + stateMachine.getState().getId());
+		message = MessageBuilder.withPayload(ComplexFormEvents.SUBMIT).setHeader("form", form3).build();
+		stateMachine.sendEvent(message);
+		System.out.println("最终状态：" + stateMachine.getState().getId());
+	}
+	
 	@RequestMapping("/sendEvent")
     void sendEvent(String machineId,String events,String id) throws Exception{
 		if(machineId.equals("form")) {
@@ -163,6 +247,7 @@ public class StateMachineController {
 		
 		//持久化stateMachine
 		orderMemorypersister.persist(stateMachine, order.getId());
+	
 	}
 	
 	@RequestMapping("/testMemoryPersisterRestore")
