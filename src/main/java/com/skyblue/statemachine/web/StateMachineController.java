@@ -1,7 +1,6 @@
 package com.skyblue.statemachine.web;
 
-import javax.annotation.Resource;
-
+import com.skyblue.statemachine.config.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -11,19 +10,7 @@ import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skyblue.statemachine.config.ComplexFormEvents;
-import com.skyblue.statemachine.config.ComplexFormStateMachineBuilder;
-import com.skyblue.statemachine.config.ComplexFormStates;
-import com.skyblue.statemachine.config.Form;
-import com.skyblue.statemachine.config.FormEvents;
-import com.skyblue.statemachine.config.FormStateMachineBuilder;
-import com.skyblue.statemachine.config.FormStates;
-import com.skyblue.statemachine.config.InMemoryStateMachinePersist;
-import com.skyblue.statemachine.config.MachineMap;
-import com.skyblue.statemachine.config.Order;
-import com.skyblue.statemachine.config.OrderEvents;
-import com.skyblue.statemachine.config.OrderStateMachineBuilder;
-import com.skyblue.statemachine.config.OrderStates;
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/statemachine")
@@ -90,8 +77,11 @@ public class StateMachineController {
 		// 触发PAY事件
 		stateMachine.sendEvent(OrderEvents.PAY);
 
+		// 这是另一个状态机实例，对上面创建的状态机无影响
+		StateMachine<OrderStates, OrderEvents> stateMachineTest = orderStateMachineBuilder.build(beanFactory);
+		System.out.println("测试状态机" + stateMachineTest.getId());
 		// 触发RECEIVE事件
-		//stateMachine.sendEvent(OrderEvents.RECEIVE);
+		stateMachineTest.sendEvent(OrderEvents.RECEIVE);
 		
 		//用message传递数据
 		Order order = new Order(orderId, "547568678", "广东省深圳市", "13435465465", "RECEIVE");
@@ -288,5 +278,12 @@ public class StateMachineController {
 		persister.restore(stateMachine, order);
 		//查看恢复后状态机的状态
 		System.out.println("恢复后的状态：" + stateMachine.getState().getId());
+
+		// 触发RECEIVE事件
+		stateMachine.sendEvent(OrderEvents.RECEIVE);
+
+		// 获取最终状态
+		System.out.println("最终状态：" + stateMachine.getState().getId());
 	}
+
 }
